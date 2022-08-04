@@ -1,0 +1,34 @@
+package com.training.client;
+
+import java.util.Scanner;
+
+import com.training.exception.InValidVoterException;
+import com.training.service.ElectionBoothImpl;
+import com.training.service.IElectionBooth;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+
+		IElectionBooth electionBooth = new ElectionBoothImpl();
+
+		Scanner sc = new Scanner(System.in);
+
+		System.out.println("Enter the age");
+		int age = sc.nextInt();
+
+		System.out.println("Enter the locality");
+		String locality = sc.next();
+
+		System.out.println("Enter the VoterId");
+		int voterId = sc.nextInt();
+
+		try {
+			electionBooth.checkEligibilty(age, locality, voterId);
+		} catch (InValidVoterException e) {
+			e.printStackTrace();
+		}
+		sc.close();
+	}
+
+}
