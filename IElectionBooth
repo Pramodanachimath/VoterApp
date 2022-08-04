@@ -1,0 +1,8 @@
+package com.training.service;
+
+import com.training.exception.InValidVoterException;
+
+public interface IElectionBooth {
+
+	boolean checkEligibilty(int age, String locality, int vid) throws InValidVoterException;
+}
