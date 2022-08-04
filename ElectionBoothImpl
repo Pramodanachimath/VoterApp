@@ -1,0 +1,71 @@
+package com.training.service;
+
+import com.training.exception.InValidVoterException;
+import com.training.exception.LocalityNotFoundException;
+import com.training.exception.NoVoterIDException;
+import com.training.exception.UnderAgeException;
+
+public class ElectionBoothImpl implements IElectionBooth {
+
+	@Override
+	public boolean checkEligibilty(int age, String locality, int vid) throws InValidVoterException {
+
+		try {
+			checkVoterId(vid);
+			checkAge(age);
+			checkLocality(locality);
+			System.out.println("You are eligible to vote");
+		} catch (InValidVoterException e) {
+			e.printStackTrace();
+			System.out.println("You are not eligible to vote");
+		}
+		return false;
+
+	}
+
+	private boolean checkAge(int age) throws UnderAgeException {
+		try {
+			if (age < 18) {
+				throw new UnderAgeException("Below age 18 are not eligible");
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+			throw e;
+		}
+		return false;
+
+	}
+
+	private boolean checkLocality(String locality) throws LocalityNotFoundException {
+
+		String[] area = { "Basavanagudi", "Rajajinagar", "Banashankari", "Vijayanagar" };
+		try {
+			for (String names : area) {
+				if (!locality.equals(names)) {
+					throw new LocalityNotFoundException("You are not belong to voting locality");
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+			throw e;
+		}
+
+		return false;
+
+	}
+
+	private boolean checkVoterId(int voterId) throws NoVoterIDException {
+		try {
+			if (voterId < 1000 && voterId > 9999) {
+				throw new NoVoterIDException("voter Id is not matching");
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+			throw e;
+		}
+
+		return false;
+
+	}
+
+}
